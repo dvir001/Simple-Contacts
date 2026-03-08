@@ -577,8 +577,15 @@ async function pollUpdateStatus() {
 /* ---------- URL previews & sub-item visibility ---------- */
 
 function updateUrlPreviews() {
-    const jsonName = (document.getElementById('directoryJsonFilename')?.value || 'microsip').trim() || 'microsip';
-    const xmlName = (document.getElementById('directoryXmlFilename')?.value || 'yealink').trim() || 'yealink';
+    const rawJsonName = (document.getElementById('directoryJsonFilename')?.value || 'microsip').trim() || 'microsip';
+    const rawXmlName = (document.getElementById('directoryXmlFilename')?.value || 'yealink').trim() || 'yealink';
+
+    // Allow only safe filename characters to avoid propagating unsafe DOM text.
+    const sanitizeFilename = (name) => name.replace(/[^A-Za-z0-9_-]/g, '') || 'default';
+
+    const jsonName = sanitizeFilename(rawJsonName);
+    const xmlName = sanitizeFilename(rawXmlName);
+
     const jsonPreview = document.getElementById('json-url-preview');
     const xmlPreview = document.getElementById('xml-url-preview');
     if (jsonPreview) {
