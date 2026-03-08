@@ -260,7 +260,7 @@ def post_settings():
         return jsonify({"error": "Failed to save settings"}), 500
     except Exception as exc:
         logger.error("Error in POST /api/settings: %s", exc)
-        return jsonify({"error": str(exc)}), 500
+        return jsonify({"error": "Internal server error while updating settings"}), 500
 
 
 # ---------------------------------------------------------------------------
@@ -284,7 +284,7 @@ def clear_employees():
         return jsonify({"status": "ok"})
     except Exception as exc:
         logger.error("Error clearing employees: %s", exc)
-        return jsonify({"error": str(exc)}), 500
+        return jsonify({"error": "Internal server error while clearing employees"}), 500
 
 
 # ---------------------------------------------------------------------------
