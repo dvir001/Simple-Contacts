@@ -189,7 +189,9 @@ def logout():
         post_logout = request.url_root.rstrip("/")
         forwarded_proto = request.headers.get("X-Forwarded-Proto")
         if forwarded_proto:
-            post_logout = post_logout.replace("http://", f"{forwarded_proto}://", 1)
+            proto = forwarded_proto.split(",")[0].strip().lower()
+            if proto in ("http", "https"):
+                post_logout = post_logout.replace("http://", f"{proto}://", 1)
         from urllib.parse import quote
         azure_logout = (
             f"{SSO_AUTHORITY}/oauth2/v2.0/logout"
