@@ -315,7 +315,7 @@ def azure_sync():
         return jsonify({"error": "Failed to save employee data"}), 500
     except Exception as exc:
         logger.error("Azure sync error: %s", exc)
-        return jsonify({"error": str(exc)}), 500
+        return jsonify({"error": "Azure sync failed due to an internal error"}), 500
 
 
 # ---------------------------------------------------------------------------
