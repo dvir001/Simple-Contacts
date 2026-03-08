@@ -407,7 +407,9 @@ def health():
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "5000")), debug=True)
+    debug_env = os.environ.get("FLASK_DEBUG", "").lower()
+    debug = debug_env in ("1", "true", "t", "yes")
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "5000")), debug=debug)
 
 
 # ---------------------------------------------------------------------------
