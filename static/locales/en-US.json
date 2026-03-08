@@ -1,0 +1,111 @@
+{
+  "login": {
+    "title": "Simple Contacts",
+    "ssoButton": "Sign in with Microsoft",
+    "passwordLabel": "Password",
+    "passwordButton": "Sign In"
+  },
+  "header": {
+    "title": "Simple Contacts",
+    "subtitle": "Directory integration settings",
+    "logout": "Logout"
+  },
+  "autoSync": {
+    "title": "Auto-Sync Schedule",
+    "enable": {
+      "label": "Enable Auto-Sync",
+      "description": "Automatically sync employee data from Azure AD on a daily schedule."
+    },
+    "time": {
+      "label": "Sync Time",
+      "description": "Daily sync time in your local timezone (stored as UTC)."
+    },
+    "status": {
+      "label": "Last Sync",
+      "none": "No sync has run yet.",
+      "running": "Syncing…",
+      "success": "Last sync succeeded at {time}.",
+      "failed": "Last sync failed: {error}"
+    },
+    "triggerButton": "Sync Now",
+    "syncing": "Syncing…"
+  },
+  "employees": {
+    "title": "Employee Data",
+    "azure": {
+      "label": "Sync from Azure AD",
+      "button": "Sync Now",
+      "syncing": "Syncing…",
+      "checking": "Checking Azure AD credentials…",
+      "ready": "Azure AD credentials are configured. Click Sync Now to fetch employees.",
+      "notConfigured": "Azure AD credentials are not set. Set AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET in .env to enable.",
+      "error": "Unable to check Azure AD status."
+    },
+    "status": {
+      "label": "Current Status",
+      "none": "No employee data loaded",
+      "loaded": "{count} employees loaded"
+    },
+    "clear": "Clear Data"
+  },
+  "directory": {
+    "title": "Directory Integrations",
+    "json": {
+      "label": "MicroSIP JSON Directory",
+      "description": "Enable MicroSIP-compatible JSON directory feed for softphone integration.",
+      "filename": {
+        "label": "JSON Filename",
+        "description": "URL:"
+      }
+    },
+    "xml": {
+      "label": "Yealink XML Phonebook",
+      "description": "Enable Yealink-compatible XML remote phonebook feed for desk phones.",
+      "filename": {
+        "label": "XML Filename",
+        "description": "URL:"
+      }
+    },
+    "numberSwaps": {
+      "label": "Number Swaps",
+      "description": "Find and replace text in Azure AD phone numbers. Leave \"Replace\" empty to remove the matched text.",
+      "colFind": "Find",
+      "colReplace": "Replace with",
+      "colOrder": "Order",
+      "addRow": "Add Rule",
+      "remove": "Remove",
+      "drag": "Drag to reorder",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "findPlaceholder": "+972 123456789,",
+      "replacePlaceholder": "(empty = delete)",
+      "limitReached": "Limit of {max} rules reached"
+    },
+    "custom": {
+      "label": "Custom Directory Contacts",
+      "description": "Add extra contacts that are not in Azure AD to the directory feeds.",
+      "colName": "Name",
+      "colNumber": "Number",
+      "colOrder": "Order",
+      "addRow": "Add Contact",
+      "remove": "Remove",
+      "drag": "Drag to reorder",
+      "moveUp": "Move up",
+      "moveDown": "Move down",
+      "namePlaceholder": "Contact name",
+      "numberPlaceholder": "Extension / number",
+      "limitReached": "Limit of {max} contacts reached"
+    }
+  },
+  "actions": {
+    "save": "Save Settings"
+  },
+  "flash": {
+    "settingsSaved": "Settings saved successfully.",
+    "settingsError": "Failed to save settings.",
+    "clearSuccess": "Employee data cleared.",
+    "clearError": "Failed to clear employee data.",
+    "syncSuccess": "Synced {count} employees from Azure AD.",
+    "syncError": "Failed to sync from Azure AD."
+  }
+}

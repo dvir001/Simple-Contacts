@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configure – Simple Contacts</title>
+    <link rel="stylesheet" href="/static/configure.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="header-title" data-i18n="header.title">Simple Contacts</h1>
+                <p class="header-subtitle" data-i18n="header.subtitle">Directory integration settings</p>
+            </div>
+            <div class="header-actions">
+                <a href="/logout" class="btn btn-outline" data-i18n="header.logout">Logout</a>
+            </div>
+        </header>
+
+        <!-- Flash banner -->
+        <div id="flash-banner" class="flash-banner" style="display:none;">
+            <span id="flash-message"></span>
+            <button class="flash-close" onclick="this.parentElement.style.display='none'">&times;</button>
+        </div>
+
+        <!-- Employee Data Section -->
+        <section class="config-section">
+            <div class="config-section-header">
+                <h2 data-i18n="employees.title">Employee Data</h2>
+            </div>
+            <div class="config-group">
+                <!-- Azure AD Sync -->
+                <div class="config-item" id="azure-sync-row">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="employees.azure.label">Sync from Azure AD</span>
+                        <span class="config-description" id="azure-status-text">Checking Azure AD credentials…</span>
+                    </div>
+                    <div class="config-controls">
+                        <button id="btn-azure-sync" class="btn btn-primary" disabled data-i18n="employees.azure.button">Sync Now</button>
+                    </div>
+                </div>
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="employees.status.label">Current Status</span>
+                        <span class="config-description" id="employee-status">No employee data loaded</span>
+                    </div>
+                    <div class="config-controls">
+                        <button id="btn-clear-employees" class="btn btn-danger" data-i18n="employees.clear">Clear Data</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Auto-Sync Schedule Section -->
+        <section class="config-section">
+            <div class="config-section-header">
+                <h2 data-i18n="autoSync.title">Auto-Sync Schedule</h2>
+            </div>
+            <div class="config-group">
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="autoSync.enable.label">Enable Auto-Sync</span>
+                        <span class="config-description" data-i18n="autoSync.enable.description">Automatically sync employee data from Azure AD on a daily schedule.</span>
+                    </div>
+                    <div class="config-controls">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="autoUpdateEnabled">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="config-item sub-item" id="update-time-row">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="autoSync.time.label">Sync Time</span>
+                        <span class="config-description" data-i18n="autoSync.time.description">Daily sync time in your local timezone (stored as UTC).</span>
+                    </div>
+                    <div class="config-controls time-picker-controls">
+                        <select id="updateHour" class="config-select"></select>
+                        <span class="time-separator">:</span>
+                        <select id="updateMinute" class="config-select"></select>
+                        <input type="hidden" id="updateTime">
+                    </div>
+                </div>
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="autoSync.status.label">Last Sync</span>
+                        <span class="config-description" id="sync-status-text">No sync has run yet.</span>
+                    </div>
+                    <div class="config-controls">
+                        <button id="btn-trigger-update" class="btn btn-primary" data-i18n="autoSync.triggerButton">Sync Now</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Directory Integration Section -->
+        <section class="config-section">
+            <div class="config-section-header">
+                <h2 data-i18n="directory.title">Directory Integrations</h2>
+            </div>
+            <div class="config-group">
+                <!-- MicroSIP JSON -->
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="directory.json.label">MicroSIP JSON Directory</span>
+                        <span class="config-description" data-i18n="directory.json.description">Enable MicroSIP-compatible JSON directory feed for softphone integration.</span>
+                    </div>
+                    <div class="config-controls">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="directoryJsonEnabled">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="config-item sub-item" id="json-filename-row">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="directory.json.filename.label">JSON Filename</span>
+                        <span class="config-description">
+                            <span data-i18n="directory.json.filename.description">URL:</span>
+                            <a id="json-url-preview" href="/directory/microsip.json" target="_blank" rel="noopener">/directory/microsip.json</a>
+                        </span>
+                    </div>
+                    <div class="config-controls">
+                        <input type="text" class="config-input" id="directoryJsonFilename" placeholder="microsip">
+                    </div>
+                </div>
+
+                <!-- Yealink XML -->
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="directory.xml.label">Yealink XML Phonebook</span>
+                        <span class="config-description" data-i18n="directory.xml.description">Enable Yealink-compatible XML remote phonebook feed for desk phones.</span>
+                    </div>
+                    <div class="config-controls">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="directoryXmlEnabled">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="config-item sub-item" id="xml-filename-row">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="directory.xml.filename.label">XML Filename</span>
+                        <span class="config-description">
+                            <span data-i18n="directory.xml.filename.description">URL:</span>
+                            <a id="xml-url-preview" href="/directory/yealink.xml" target="_blank" rel="noopener">/directory/yealink.xml</a>
+                        </span>
+                    </div>
+                    <div class="config-controls">
+                        <input type="text" class="config-input" id="directoryXmlFilename" placeholder="yealink">
+                    </div>
+                </div>
+
+                <!-- Number Swaps -->
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="directory.numberSwaps.label">Number Swaps</span>
+                        <span class="config-description" data-i18n="directory.numberSwaps.description">Find and replace text in Azure AD phone numbers. Leave "Replace" empty to remove the matched text.</span>
+                    </div>
+                    <div class="config-controls">
+                        <span id="swap-counter" class="contact-counter">0 / 50</span>
+                    </div>
+                </div>
+                <div class="swap-editor">
+                    <div class="swap-header">
+                        <span class="swap-col-drag"></span>
+                        <span class="swap-col-find" data-i18n="directory.numberSwaps.colFind">Find</span>
+                        <span class="swap-col-replace" data-i18n="directory.numberSwaps.colReplace">Replace with</span>
+                        <span class="swap-col-reorder" data-i18n="directory.numberSwaps.colOrder">Order</span>
+                        <span class="swap-col-actions"></span>
+                    </div>
+                    <div id="swap-list" class="swap-list">
+                        <!-- rows injected by JS -->
+                    </div>
+                    <button type="button" id="btn-add-swap" class="btn btn-add-row">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        <span data-i18n="directory.numberSwaps.addRow">Add Rule</span>
+                    </button>
+                </div>
+
+                <!-- Custom Contacts -->
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="directory.custom.label">Custom Directory Contacts</span>
+                        <span class="config-description" data-i18n="directory.custom.description">Add extra contacts that are not in Azure AD to the directory feeds.</span>
+                    </div>
+                    <div class="config-controls">
+                        <span id="custom-contacts-counter" class="contact-counter">0 / 200</span>
+                    </div>
+                </div>
+                <div class="custom-contacts-editor">
+                    <div class="custom-contacts-header">
+                        <span class="custom-col-drag"></span>
+                        <span class="custom-col-name" data-i18n="directory.custom.colName">Name</span>
+                        <span class="custom-col-number" data-i18n="directory.custom.colNumber">Number</span>
+                        <span class="custom-col-reorder" data-i18n="directory.custom.colOrder">Order</span>
+                        <span class="custom-col-actions"></span>
+                    </div>
+                    <div id="custom-contacts-list" class="custom-contacts-list">
+                        <!-- rows injected by JS -->
+                    </div>
+                    <button type="button" id="btn-add-contact" class="btn btn-add-row">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        <span data-i18n="directory.custom.addRow">Add Contact</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Save button -->
+        <div class="actions-bar">
+            <button id="btn-save" class="btn btn-primary btn-lg" data-i18n="actions.save">Save Settings</button>
+        </div>
+    </div>
+
+    <script src="/static/i18n.js"></script>
+    <script src="/static/configure.js"></script>
+</body>
+</html>
