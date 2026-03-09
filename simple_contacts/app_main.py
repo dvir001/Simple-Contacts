@@ -171,8 +171,7 @@ def login_password():
     if password == expected:
         session["authenticated"] = True
         session["auth_method"] = "password"
-        next_path = sanitize_next_path(request.form.get("next", ""))
-        return redirect(next_path or url_for("configure"))
+        return redirect(url_for("configure"))
     return render_template("login.html", sso_enabled=False, error="Invalid password"), 401
 
 
