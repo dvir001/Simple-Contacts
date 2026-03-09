@@ -2,6 +2,9 @@
 
 Standalone directory integration service providing **MicroSIP JSON** and **Yealink XML** phone directory feeds from Azure AD employee data.
 
+<img width="790" height="890" alt="image" src="https://github.com/user-attachments/assets/454cd2e0-0b3f-4219-9989-82cd56338fee" />
+<img width="633" height="867" alt="image" src="https://github.com/user-attachments/assets/6612ebc1-7680-45de-894f-79cb14e35c04" />
+
 ## Features
 
 - **Azure AD sync** – fetch employees directly from Microsoft Graph (same client-credentials flow as Simple-Org-Chart)
