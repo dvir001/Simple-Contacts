@@ -574,6 +574,59 @@ async function pollUpdateStatus() {
     }
 }
 
+/* ---------- config export / import ---------- */
+
+function exportConfig() {
+    window.location.href = `${API}/api/settings/export`;
+}
+
+async function importConfig() {
+    const fileInput = document.getElementById('config-file-input');
+    if (!fileInput) return;
+    fileInput.click();
+}
+
+async function handleConfigFileSelected(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const res = await fetch(`${API}/api/settings/import`, {
+            method: 'POST',
+            body: formData,
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || res.statusText);
+        settings = data.settings || settings;
+        applySettingsToUI();
+        flash('flash.importSuccess', 'Configuration imported successfully.');
+    } catch (err) {
+        console.error('Config import failed', err);
+        flash('flash.importError', 'Failed to import configuration: ' + err.message, true);
+    } finally {
+        // Reset so the same file can be re-selected
+        event.target.value = '';
+    }
+}
+
+async function resetConfig() {
+    if (!confirm(t('configTransfer.reset.confirm', 'Are you sure you want to reset all settings to defaults? This cannot be undone.'))) return;
+    try {
+        const res = await fetch(`${API}/api/settings/reset`, { method: 'POST' });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || res.statusText);
+        settings = data.settings || settings;
+        applySettingsToUI();
+        flash('flash.resetSuccess', 'Settings have been reset to defaults.');
+    } catch (err) {
+        console.error('Config reset failed', err);
+        flash('flash.resetError', 'Failed to reset settings.', true);
+    }
+}
+
 /* ---------- URL previews & sub-item visibility ---------- */
 
 function updateUrlPreviews() {
@@ -657,6 +710,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateContactCounter();
         updateArrowStates();
     });
+
+    // Config export / import / reset
+    document.getElementById('btn-export-config')?.addEventListener('click', exportConfig);
+    document.getElementById('btn-import-config')?.addEventListener('click', importConfig);
+    document.getElementById('config-file-input')?.addEventListener('change', handleConfigFileSelected);
+    document.getElementById('btn-reset-config')?.addEventListener('click', resetConfig);
 
     // Toggle sub-items & URL previews
     document.getElementById('directoryJsonEnabled')?.addEventListener('change', updateSubItemVisibility);

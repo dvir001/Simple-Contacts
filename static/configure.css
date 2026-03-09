@@ -333,6 +333,10 @@ body {
     transform: scale(0.97);
 }
 
+.config-controls .btn {
+    min-width: 120px;
+}
+
 .btn-primary {
     background: var(--primary);
     color: #fff;
@@ -350,6 +354,16 @@ body {
 
 .btn-outline:hover {
     background: rgba(255, 255, 255, 0.3);
+}
+
+.config-section .btn-outline {
+    background: #fff;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.config-section .btn-outline:hover {
+    background: rgba(0, 120, 212, 0.08);
 }
 
 .btn-danger {

@@ -209,6 +209,43 @@
             </div>
         </section>
 
+        <!-- Config Export / Import -->
+        <section class="config-section">
+            <div class="config-section-header">
+                <h2 data-i18n="configTransfer.title">Configuration Transfer</h2>
+            </div>
+            <div class="config-group">
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="configTransfer.export.label">Export Configuration</span>
+                        <span class="config-description" data-i18n="configTransfer.export.description">Download all settings as a JSON file. Employee data is not included.</span>
+                    </div>
+                    <div class="config-controls">
+                        <button id="btn-export-config" class="btn btn-primary" data-i18n="configTransfer.export.button">Export</button>
+                    </div>
+                </div>
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="configTransfer.import.label">Import Configuration</span>
+                        <span class="config-description" data-i18n="configTransfer.import.description">Upload a previously exported JSON file to restore settings.</span>
+                    </div>
+                    <div class="config-controls">
+                        <input type="file" id="config-file-input" accept=".json" style="display:none">
+                        <button id="btn-import-config" class="btn btn-outline" data-i18n="configTransfer.import.button">Import</button>
+                    </div>
+                </div>
+                <div class="config-item">
+                    <div class="config-info">
+                        <span class="config-label" data-i18n="configTransfer.reset.label">Reset to Defaults</span>
+                        <span class="config-description" data-i18n="configTransfer.reset.description">Restore all settings to their factory defaults. Employee data is not affected.</span>
+                    </div>
+                    <div class="config-controls">
+                        <button id="btn-reset-config" class="btn btn-danger" data-i18n="configTransfer.reset.button">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Save button -->
         <div class="actions-bar">
             <button id="btn-save" class="btn btn-primary btn-lg" data-i18n="actions.save">Save Settings</button>

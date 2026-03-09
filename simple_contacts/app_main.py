@@ -266,6 +266,74 @@ def post_settings():
 
 
 # ---------------------------------------------------------------------------
+# Config export / import
+# ---------------------------------------------------------------------------
+
+@app.route("/api/settings/export", methods=["GET"])
+@require_auth
+def export_settings():
+    """Download current settings as a JSON file (no employee data)."""
+    settings = load_settings()
+    payload = json.dumps(settings, indent=2)
+    return Response(
+        payload,
+        mimetype="application/json",
+        headers={
+            "Content-Disposition": 'attachment; filename="simple-contacts-config.json"',
+        },
+    )
+
+
+@app.route("/api/settings/import", methods=["POST"])
+@require_auth
+def import_settings():
+    """Import settings from an uploaded JSON file."""
+    uploaded = request.files.get("file")
+    if not uploaded:
+        return jsonify({"error": "No file uploaded"}), 400
+
+    try:
+        raw = uploaded.read()
+        incoming = json.loads(raw)
+    except (json.JSONDecodeError, UnicodeDecodeError) as exc:
+        logger.warning("Config import: invalid JSON – %s", exc)
+        return jsonify({"error": "Invalid JSON file"}), 400
+
+    if not isinstance(incoming, dict):
+        return jsonify({"error": "Expected a JSON object"}), 400
+
+    # Only accept known setting keys
+    current = load_settings()
+    for key in DEFAULT_SETTINGS:
+        if key in incoming:
+            current[key] = incoming[key]
+
+    # Enforce custom contacts limit
+    raw_contacts = current.get("customDirectoryContacts", "")
+    lines = [l.strip() for l in raw_contacts.split("\n") if l.strip() and not l.strip().startswith("#")]
+    if len(lines) > MAX_CUSTOM_CONTACTS:
+        return jsonify({"error": f"Custom contacts limit is {MAX_CUSTOM_CONTACTS}"}), 400
+
+    if save_settings(current):
+        # Restart scheduler if sync-related settings changed
+        if "updateTime" in incoming or "autoUpdateEnabled" in incoming:
+            threading.Thread(target=restart_scheduler, daemon=True).start()
+        return jsonify({"status": "ok", "settings": current})
+    return jsonify({"error": "Failed to save imported settings"}), 500
+
+
+@app.route("/api/settings/reset", methods=["POST"])
+@require_auth
+def reset_settings():
+    """Reset all settings back to defaults."""
+    if save_settings(DEFAULT_SETTINGS):
+        threading.Thread(target=restart_scheduler, daemon=True).start()
+        logger.info("Settings reset to defaults")
+        return jsonify({"status": "ok", "settings": DEFAULT_SETTINGS.copy()})
+    return jsonify({"error": "Failed to reset settings"}), 500
+
+
+# ---------------------------------------------------------------------------
 # Employee data API
 # ---------------------------------------------------------------------------
 

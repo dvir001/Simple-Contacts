@@ -97,6 +97,25 @@
       "limitReached": "Limit of {max} contacts reached"
     }
   },
+  "configTransfer": {
+    "title": "Configuration Transfer",
+    "export": {
+      "label": "Export Configuration",
+      "description": "Download all settings as a JSON file. Employee data is not included.",
+      "button": "Export"
+    },
+    "import": {
+      "label": "Import Configuration",
+      "description": "Upload a previously exported JSON file to restore settings.",
+      "button": "Import"
+    },
+    "reset": {
+      "label": "Reset to Defaults",
+      "description": "Restore all settings to their factory defaults. Employee data is not affected.",
+      "button": "Reset",
+      "confirm": "Are you sure you want to reset all settings to defaults? This cannot be undone."
+    }
+  },
   "actions": {
     "save": "Save Settings"
   },
@@ -106,6 +125,10 @@
     "clearSuccess": "Employee data cleared.",
     "clearError": "Failed to clear employee data.",
     "syncSuccess": "Synced {count} employees from Azure AD.",
-    "syncError": "Failed to sync from Azure AD."
+    "syncError": "Failed to sync from Azure AD.",
+    "importSuccess": "Configuration imported successfully.",
+    "importError": "Failed to import configuration.",
+    "resetSuccess": "Settings have been reset to defaults.",
+    "resetError": "Failed to reset settings."
   }
 }
