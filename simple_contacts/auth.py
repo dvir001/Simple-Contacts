@@ -10,6 +10,7 @@ import logging
 import re
 from functools import wraps
 from typing import Optional
+from urllib.parse import urlparse
 
 from flask import jsonify, redirect, request, session, url_for
 
@@ -21,9 +22,13 @@ _SAFE_NEXT_RE = re.compile(r"^/[a-zA-Z0-9_./-]*$")
 
 def sanitize_next_path(raw: Optional[str]) -> str:
     """Return *raw* only if it looks like a safe relative path, else ''."""
-    if raw and _SAFE_NEXT_RE.match(raw):
-        return raw
-    return ""
+    if not raw or not _SAFE_NEXT_RE.match(raw):
+        return ""
+    # Extra guard: reject anything with a netloc (protocol-relative URLs, etc.)
+    parsed = urlparse(raw)
+    if parsed.netloc or parsed.scheme:
+        return ""
+    return raw
 
 
 # ---------------------------------------------------------------------------
