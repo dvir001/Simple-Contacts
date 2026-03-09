@@ -10,6 +10,9 @@ Standalone directory integration service providing **MicroSIP JSON** and **Yeali
 - **Azure AD sync** – fetch employees directly from Microsoft Graph (same client-credentials flow as Simple-Org-Chart)
 - **MicroSIP JSON directory** – softphone-compatible contact feed
 - **Yealink XML phonebook** – remote phonebook for Yealink desk phones (T31P, T33G, T46U, etc.)
+
+<img width="743" height="281" alt="image" src="https://github.com/user-attachments/assets/077fe4b7-9656-4995-ad17-6984db809585" />
+
 - **Custom contacts** – append extra contacts not in Azure AD via the configure page
 - **Number swaps** – find/replace rules applied to phone numbers before export (e.g. strip country prefix, remap extensions)
 - **Azure AD SSO** – optional single sign-on via MSAL with password fallback
