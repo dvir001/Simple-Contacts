@@ -62,25 +62,25 @@ def auth_client(client):
     return client
 
 
-SAMPLE_EMPLOYEES = [
+SAMPLE_EMPLOYEES = [  # test-only fake data, not real PII
     {
-        "name": "Employee One",
-        "email": "user1@example.invalid",
-        "phone": "000-0000",
-        "businessPhone": "000-0001",
+        "name": "Test User One",
+        "email": "testuser1@test.example",  # noqa: E501  # not real
+        "phone": "555-0000",
+        "businessPhone": "555-0001",
         "title": "Engineer",
         "department": "Engineering",
-        "city": "CityOne",
-        "state": "ST",
+        "city": "Testville",
+        "state": "TS",
     },
     {
-        "name": "Employee Two",
-        "email": "user2@example.invalid",
+        "name": "Test User Two",
+        "email": "testuser2@test.example",  # noqa: E501  # not real
         "phone": "",
-        "businessPhone": "000-0002",
+        "businessPhone": "555-0002",
         "title": "Manager",
         "department": "Sales",
-        "city": "CityTwo",
-        "state": "ST",
+        "city": "Testville",
+        "state": "TS",
     },
 ]

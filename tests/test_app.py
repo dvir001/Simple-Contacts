@@ -74,7 +74,7 @@ class TestSettingsAPI:
 class TestEmployeeAPI:
     def _seed_employees(self):
         """Write sample employees directly to the data file."""
-        EMPLOYEE_LIST_FILE.write_text(json.dumps(SAMPLE_EMPLOYEES), encoding="utf-8")
+        EMPLOYEE_LIST_FILE.write_text(json.dumps(SAMPLE_EMPLOYEES), encoding="utf-8")  # lgtm[py/clear-text-storage-sensitive-data] test fixture with fake data
 
     def test_get_employees(self, auth_client):
         self._seed_employees()
@@ -103,7 +103,7 @@ class TestDirectoryFeeds:
             }),
             content_type="application/json",
         )
-        EMPLOYEE_LIST_FILE.write_text(json.dumps(SAMPLE_EMPLOYEES), encoding="utf-8")
+        EMPLOYEE_LIST_FILE.write_text(json.dumps(SAMPLE_EMPLOYEES), encoding="utf-8")  # lgtm[py/clear-text-storage-sensitive-data] test fixture with fake data
 
     def test_json_feed(self, auth_client, client):
         self._setup_data(auth_client)
