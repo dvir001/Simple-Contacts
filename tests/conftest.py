@@ -15,14 +15,17 @@ def _isolate_data(tmp_path, monkeypatch):
     """Redirect all data/settings paths to a temporary directory per-test."""
     data_dir = tmp_path / "data"
     data_dir.mkdir()
+    config_dir = tmp_path / "config"
+    config_dir.mkdir()
 
     monkeypatch.setattr("simple_contacts.config.DATA_DIR", data_dir)
-    monkeypatch.setattr("simple_contacts.config.SETTINGS_FILE", data_dir / "app_settings.json")
+    monkeypatch.setattr("simple_contacts.config.CONFIG_DIR", config_dir)
+    monkeypatch.setattr("simple_contacts.config.SETTINGS_FILE", config_dir / "app_settings.json")
     monkeypatch.setattr("simple_contacts.config.EMPLOYEE_LIST_FILE", data_dir / "employee_list.json")
     monkeypatch.setattr("simple_contacts.config.DATA_UPDATE_STATUS_FILE", data_dir / "data_update_status.json")
 
     # Also patch in settings module which imports at module level
-    monkeypatch.setattr("simple_contacts.settings.SETTINGS_FILE", data_dir / "app_settings.json")
+    monkeypatch.setattr("simple_contacts.settings.SETTINGS_FILE", config_dir / "app_settings.json")
 
     # Patch data_update module-level string paths
     monkeypatch.setattr("simple_contacts.data_update.DATA_DIR", str(data_dir))

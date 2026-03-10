@@ -1,6 +1,6 @@
 services:
   simple-contacts:
-    build: .
+    image: ghcr.io/dvir001/simple-contacts:latest
     container_name: simple-contacts
     restart: unless-stopped
     ports:
@@ -9,3 +9,4 @@ services:
       - .env
     volumes:
       - ./data:/app/data
+      - ./config:/app/config

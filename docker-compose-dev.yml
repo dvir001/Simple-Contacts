@@ -9,6 +9,7 @@ services:
     volumes:
       - .:/app
       - ./data:/app/data
+      - ./config:/app/config
     environment:
       - FLASK_DEBUG=1
     command: ["python", "-m", "simple_contacts.app_main"]

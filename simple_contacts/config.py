@@ -10,10 +10,11 @@ logger = logging.getLogger(__name__)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
+CONFIG_DIR = BASE_DIR / "config"
 STATIC_DIR = BASE_DIR / "static"
 TEMPLATE_DIR = BASE_DIR / "templates"
 
-SETTINGS_FILE = DATA_DIR / "app_settings.json"
+SETTINGS_FILE = CONFIG_DIR / "app_settings.json"
 EMPLOYEE_LIST_FILE = DATA_DIR / "employee_list.json"
 DATA_UPDATE_STATUS_FILE = DATA_DIR / "data_update_status.json"
 
@@ -38,8 +39,8 @@ def sso_configured() -> bool:
 
 
 def ensure_directories() -> None:
-    """Ensure that the application's data and static directories exist."""
-    for target in (DATA_DIR, STATIC_DIR):
+    """Ensure that the application's data, config, and static directories exist."""
+    for target in (DATA_DIR, CONFIG_DIR, STATIC_DIR):
         try:
             target.mkdir(parents=True, exist_ok=True)
         except OSError as error:
@@ -49,6 +50,7 @@ def ensure_directories() -> None:
 __all__ = [
     "BASE_DIR",
     "DATA_DIR",
+    "CONFIG_DIR",
     "STATIC_DIR",
     "TEMPLATE_DIR",
     "SETTINGS_FILE",
