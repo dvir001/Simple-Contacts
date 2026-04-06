@@ -10,8 +10,8 @@ requires-python = ">=3.10"
 dependencies = [
     "flask>=3.0",
     "gunicorn>=22.0",
-    "requests==2.31.0",
-    "cryptography==41.0.0",
+    "requests==2.33.0",
+    "cryptography==46.0.6",
 ]
 
 [tool.pytest.ini_options]
