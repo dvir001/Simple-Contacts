@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 dependencies = [
     "flask>=3.0",
     "gunicorn>=22.0",
-    "requests==2.33.0",
+    "requests==2.33.1",
     "cryptography==46.0.6",
 ]
 
