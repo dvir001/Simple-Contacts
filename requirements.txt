@@ -1,6 +1,6 @@
 flask>=3.0
 gunicorn>=22.0
-requests==2.33.1
+requests==2.34.2
 cryptography==48.0.0
 schedule>=1.2.2
 msal>=1.36.0
