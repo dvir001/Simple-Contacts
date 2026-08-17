@@ -145,7 +145,7 @@ class TestUpdateEmployeeData:
 
         status = load_data_update_status()
         assert status["success"] is False
-        assert "API timeout" in status.get("error", "")
+        assert status.get("error") == "Employee sync failed due to an internal error."
 
     @patch("simple_contacts.data_update.azure_credentials_configured", return_value=True)
     def test_skips_when_already_running(self, mock_creds, monkeypatch):
