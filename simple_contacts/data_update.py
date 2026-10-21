@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 DATA_DIR = str(app_config.DATA_DIR)
 EMPLOYEE_LIST_FILE = str(app_config.EMPLOYEE_LIST_FILE)
 DATA_UPDATE_STATUS_FILE = os.path.join(DATA_DIR, "data_update_status.json")
+GENERIC_SYNC_ERROR = "Employee sync failed due to an internal error."
 
 _DATA_UPDATE_STATUS_LOCK = threading.Lock()
 _CURRENT_DATA_UPDATE_STATUS: Dict[str, Any] = {"state": "idle"}
@@ -176,7 +177,13 @@ def update_employee_data(source: str = "manual") -> None:
     try:
         employees = fetch_all_employees()
         if not employees:
-            raise RuntimeError("No employees returned from Graph API")
+            logger.warning("No employees returned from Graph API (source=%s)", source)
+            mark_data_update_finished(
+                success=False,
+                error="No employees returned from Graph API.",
+                source=source,
+            )
+            return
 
         # Persist
         emp_path = app_config.EMPLOYEE_LIST_FILE
@@ -189,7 +196,7 @@ def update_employee_data(source: str = "manual") -> None:
 
     except Exception as exc:
         logger.exception("Employee data sync failed (source=%s): %s", source, exc)
-        mark_data_update_finished(success=False, error=str(exc), source=source)
+        mark_data_update_finished(success=False, error=GENERIC_SYNC_ERROR, source=source)
 
 
 __all__ = [
